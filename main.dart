@@ -9,6 +9,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: UserGridScreen(),
     );
   }
@@ -27,30 +28,86 @@ class UserGridScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('User Grid'),
+        title: Text('User List'),
+        backgroundColor: Colors.blueAccent,
       ),
-      body: GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2, // Number of columns
-          childAspectRatio: 3, // Aspect ratio of each card
-        ),
-        itemCount: users.length,
-        itemBuilder: (context, index) {
-          final user = users[index];
-          return Card(
-            margin: EdgeInsets.all(8.0),
-            child: Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('Username: ${user.username}', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                  Text('Role: ${user.role}', style: TextStyle(fontSize: 14)),
-                ],
+      body: Column(
+        children: [
+          Expanded(
+            child: GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2, // Số cột trong GridView
+                childAspectRatio: 3, // Tỉ lệ chiều ngang : chiều cao
               ),
+              itemCount: users.length,
+              itemBuilder: (context, index) {
+                final user = users[index];
+                return Card(
+                  margin: EdgeInsets.all(8.0),
+                  color: Colors.lightBlue[50],
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Username: ${user.username}',
+                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          'Role: ${user.role}',
+                          style: TextStyle(fontSize: 14, color: Colors.grey[700]),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
             ),
-          );
-        },
+          ),
+          Container(
+            margin: EdgeInsets.all(8.0),
+            child: ElevatedButton.icon(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MusicPlayerScreen()),
+                );
+              },
+              icon: Icon(Icons.music_note),
+              label: Text("Go to Music Player"),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class MusicPlayerScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Music Player"),
+        backgroundColor: Colors.deepPurple,
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.music_note,
+              size: 100,
+              color: Colors.purpleAccent,
+            ),
+            SizedBox(height: 20),
+            Text(
+              "Music Player Coming Soon!",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
       ),
     );
   }
